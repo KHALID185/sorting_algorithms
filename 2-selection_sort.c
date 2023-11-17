@@ -12,7 +12,7 @@ void selection_sort(int *array, size_t size)
 	int garage;
 	size_t itr, itr_1, itr_2;
 
-	if (array == NULL || size == 0)
+	if (!array || !size)
 		return;
 	for (itr = 0; itr <= size - 2; itr++)
 	{
