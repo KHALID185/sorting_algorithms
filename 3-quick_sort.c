@@ -1,7 +1,7 @@
 #include "sort.h"
 
 /**
- * echange_place: swap two element of array
+ * echange_place - swap two element of array
  * @arr: the array
  * @sz: size of array
  * @el_1: first element of array
@@ -55,6 +55,7 @@ void sort_int(int *arr, size_t sz, ssize_t index_l, ssize_t index_h)
 	if (index_l < index_h)
 	{
 		size_t pvt = sch_Lomuto(arr, sz, index_l, index_h);
+
 		sort_int(arr, sz, index_l, pvt - 1);
 		sort_int(arr, sz, pvt + 1, index_h);
 	}
