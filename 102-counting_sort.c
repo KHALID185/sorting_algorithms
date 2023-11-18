@@ -7,11 +7,8 @@
 */
 void counting_sort(int *array, size_t size)
 {
-	int iter_1, indx_m;
-	int *cnt = NULL;
-	int *indx_cp = NULL;
-	size_t iter_2, garage;
-	size_t val_sum = 0;
+	int iter_1, indx_m, *cnt = NULL, *indx_cp = NULL;
+	size_t iter_2, garage, val_sum = 0;
 
 	if (!array || size < 2)
 		return;
@@ -36,8 +33,7 @@ void counting_sort(int *array, size_t size)
 		cnt[array[iter_2]] += 1;
 	for (iter_1 = 0; iter_1 <= indx_m; iter_1++)
 	{
-		garage = cnt[iter_1];
-		cnt[iter_1] = val_sum;
+		garage = cnt[iter_1], cnt[iter_1] = val_sum;
 		val_sum += garage;
 	}
 	for (iter_2 = 0; iter_2 < size; iter_2++)
@@ -46,6 +42,5 @@ void counting_sort(int *array, size_t size)
 		cnt[indx_cp[iter_2]] += 1;
 	}
 	print_array(cnt, indx_m + 1);
-	free(cnt);
-	free(indx_cp);
+	free(cnt), free(indx_cp);
 }
