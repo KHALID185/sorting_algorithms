@@ -1,14 +1,14 @@
 #include "sort.h"
 
 /**
- * echange_place - echange value in the array
+ * ech_place - echange value in the array
  * @index_new: pointer in a new value of array
  * @index_prev: pointer in the old value of array
  * @d_lst: a doubly linked list
  * Return: empty
 */
 
-void echange_place(listint_t *index_new, listint_t *index_prev, listint_t **d_lst)
+void ech_place(listint_t *index_new, listint_t *index_prev, listint_t **d_lst)
 {
 	listint_t *garage_1 = index_new->next;
 	listint_t *garage_2 = index_prev->prev;
@@ -42,7 +42,7 @@ void cocktail_sort_list(listint_t **list)
 		while (srt_tail->next)
 		{
 			if (srt_tail->n > srt_tail->next->n)
-				echange_place(srt_tail->next, srt_tail, list);
+				ech_place(srt_tail->next, srt_tail, list);
 			else
 				srt_tail = srt_tail->next;
 		}
@@ -50,7 +50,7 @@ void cocktail_sort_list(listint_t **list)
 		while (srt_tail->prev != el_f)
 		{
 			if (srt_tail->n < srt_tail->prev->n)
-				echange_place(srt_tail, srt_tail->prev, list);
+				ech_place(srt_tail, srt_tail->prev, list);
 			else
 				srt_tail = srt_tail->prev;
 		}
