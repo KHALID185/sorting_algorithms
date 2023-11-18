@@ -35,12 +35,12 @@ void cocktail_sort_list(listint_t **list)
 }
 
 /**
- * * ech_place - echange value in the array
- * * @index_new: pointer in a new value of array
- * * @index_prev: pointer in the old value of array
- * * @d_lst: a doubly linked list
- * * Return: empty
- * */
+ * ech_place - echange value in the array
+ * @index_new: pointer in a new value of array
+ * @index_prev: pointer in the old value of array
+ * @d_lst: a doubly linked list
+ * Return: empty
+*/
 
 void ech_place(listint_t *index_new, listint_t *index_prev, listint_t **d_lst)
 {
