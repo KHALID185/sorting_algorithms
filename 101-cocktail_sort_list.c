@@ -14,6 +14,7 @@ void cocktail_sort_list(listint_t **list)
 
 	if (!list || !(*list) || (*list)->next == NULL)
 		return;
+	srt_tail = *list;
 	do {
 		while (srt_tail->next)
 		{
