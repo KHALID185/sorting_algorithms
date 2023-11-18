@@ -1,12 +1,12 @@
 nclude "sort.h"
 
 /**
- * * echange_place - echange value in the array
- * * @index_new: pointer in a new value of array
- * * @index_prev: pointer in the old value of array
- * * @d_lst: a doubly linked list
- * * Return: empty
- * */
+ * echange_place - echange value in the array
+ * @index_new: pointer in a new value of array
+ * @index_prev: pointer in the old value of array
+ * @d_lst: a doubly linked list
+ * Return: empty
+*/
 
 void echange_place(listint_t *index_new, listint_t *index_prev, listint_t **d_lst)
 {
@@ -27,10 +27,10 @@ void echange_place(listint_t *index_new, listint_t *index_prev, listint_t **d_ls
 }
 
 /**
- * * cocktail_sort_list - sort array of int using cocktail sort algorithm
- * * @list: doubly linked list
- * * Return: empty
- * */
+ * cocktail_sort_list - sort array of int using cocktail sort algorithm
+ * @list: doubly linked list
+ * Return: empty
+*/
 
 void cocktail_sort_list(listint_t **list)
 {
