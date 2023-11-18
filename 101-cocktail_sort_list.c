@@ -1,4 +1,4 @@
-nclude "sort.h"
+#include "sort.h"
 
 /**
  * echange_place - echange value in the array
