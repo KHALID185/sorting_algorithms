@@ -10,7 +10,7 @@ void ech_place(listint_t *index_new, listint_t *index_prev, listint_t **d_lst);
 
 void cocktail_sort_list(listint_t **list)
 {
-	listint_t *srt_tail = *list, *el_f = NULL, *el_l = NULL;
+	listint_t *srt_tail, *el_f = NULL, *el_l = NULL;
 
 	if (!list || !(*list) || (*list)->next == NULL)
 		return;
