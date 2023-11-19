@@ -1,80 +1,144 @@
-#include "sort.h"
+#include "deck.h"
+
+int cmp_s(const char *str1, const char *str2);
+char upload_val(deck_node_t *el_crd);
+void insert_kind(deck_node_t **dk);
+void insert_deck_val(deck_node_t **dk);
+void sort_deck(deck_node_t **deck);
 
 /**
- * cmp_bitnc - comparaison bitonic function
- * @srt_direction: sorted numbers direction
- * @arr: the array
- * @sz: the size of array
+ * cmp_s - compare two strings
+ * @str1: string 1
+ * @str2: string 2.
+ * Return: int
+*/
+
+int cmp_s(const char *str1, const char *str2)
+{
+	while (*str1 && *str2 && *str1 == *str2)
+	{
+		str1++;
+		str2++;
+	}
+
+	if (*str1 != *str2)
+		return (*str1 - *str2);
+	return (0);
+}
+
+/**
+ * upload_val - uploade the value of the card
+ * @el_crd: pointer to a strct card
+ * Return: char
+*/
+
+char upload_val(deck_node_t *el_crd)
+{
+	if (cmp_s(el_crd->card->value, "Ace") == 0)
+		return (0);
+	if (cmp_s(el_crd->card->value, "1") == 0)
+		return (1);
+	if (cmp_s(el_crd->card->value, "2") == 0)
+		return (2);
+	if (cmp_s(el_crd->card->value, "3") == 0)
+		return (3);
+	if (cmp_s(el_crd->card->value, "4") == 0)
+		return (4);
+	if (cmp_s(el_crd->card->value, "5") == 0)
+		return (5);
+	if (cmp_s(el_crd->card->value, "6") == 0)
+		return (6);
+	if (cmp_s(el_crd->card->value, "7") == 0)
+		return (7);
+	if (cmp_s(el_crd->card->value, "8") == 0)
+		return (8);
+	if (cmp_s(el_crd->card->value, "9") == 0)
+		return (9);
+	if (cmp_s(el_crd->card->value, "10") == 0)
+		return (10);
+	if (cmp_s(el_crd->card->value, "Jack") == 0)
+		return (11);
+	if (cmp_s(el_crd->card->value, "Queen") == 0)
+		return (12);
+	return (13);
+}
+
+/**
+ * insert_kind - insertion strct kind
+ * @dk: pointer to the head of doubles linked list deck
  * Return: empty
 */
 
-void cmp_bitnc(char srt_direction, int *arr, size_t sz)
+void insert_kind(deck_node_t **dk)
 {
-	size_t iter_1, iter;
-	int change_plc;
+	deck_node_t *i, *add, *garage;
 
-	iter = sz / 2;
-	for (iter_1 = 0; iter_1 < iter; iter_1++)
+	for (i = (*dk)->next; i != NULL; i = garage)
 	{
-		if ((arr[iter_1] > arr[iter_1 + iter]) == srt_direction)
+		garage = i->next;
+		add = i->prev;
+		while (add != NULL && add->card->kind > i->card->kind)
 		{
-			change_plc = arr[iter_1];
-			arr[iter_1] = arr[iter_1 + iter];
-			arr[iter_1 + iter] = change_plc;
+			add->next = i->next;
+			if (i->next != NULL)
+				i->next->prev = add;
+			i->prev = add->prev;
+			i->next = add;
+			if (add->prev != NULL)
+				add->prev->next = i;
+			else
+				*dk = i;
+			add->prev = i;
+			add = i->prev;
 		}
 	}
 }
 
 /**
- * mrg_bitnc - merge using bitonic algorithm function
- * @srt_direction: direction of the sorted numbers
- * @arr: the array
- * @sz: size of array
+ * insert_deck_val - insertion of value of strct decl
+ * @dk: pointer to the head of doubly-linked list deck
  * Return: empty
 */
 
-void mrg_bitnc(char srt_direction, int *arr, size_t sz)
+void insert_deck_val(deck_node_t **dk)
 {
-	if (sz <= 1)
-		return;
-	cmp_bitnc(srt_direction, arr, sz);
-	mrg_bitnc(srt_direction, arr, sz / 2);
-	mrg_bitnc(srt_direction, arr + (sz / 2), sz / 2);
+	deck_node_t *i, *add, *garage;
+
+	for (i = (*dk)->next; i != NULL; i = garage)
+	{
+		garage = i->next;
+		add = i->prev;
+		while (
+			add != NULL && add->card->kind == i->card->kind &&
+			upload_val(add) > upload_val(i)
+		)
+		{
+			add->next = i->next;
+			if (i->next != NULL)
+				i->next->prev = add;
+			add->prev = add->prev;
+			i->next = add;
+			if (add->prev != NULL)
+				add->prev->next = i;
+			else
+				*dk = i;
+			add->prev = i;
+			add = i->prev;
+		}
+	}
 }
 
 /**
- * srt_bitnc - sort integers using bitonic algorithm
- * @srt_d: direction of array sorted
- * @arr: the array
- * @sz: size of array
- * @sz_t: total size
+ * sort_deck - a function that sorts a deck of cards.
+ * @deck: A pointer to the head of doubly-linked list
  * Return: empty
-*/
+ */
 
-void srt_bitnc(char srt_d, int *arr, size_t sz, size_t sz_t)
+void sort_deck(deck_node_t **deck)
 {
-	if (sz <= 1)
+	if (!deck || !(*deck) || (*deck)->next == NULL)
 		return;
-	printf("Merging [%lu/%lu] (%s):\n", sz, sz_t, (srt_d == 1) ? "UP" : "DOWN");
-	print_array(arr, sz);
-	srt_bitnc(1, arr, sz / 2, sz_t);
-	srt_bitnc(0, arr + (sz / 2), sz / 2, sz_t);
-	mrg_bitnc(srt_dn, arr, sz);
-	printf("Result [%lu/%lu] (%s):\n", sz, sz_t, (srt_d == 1) ? "up" : "DOWN");
-	print_array(arr, sz);
 
-}
-
-/**
- * bitonic_sort - sort array of int using bitonic algorithm
- * @array: the array to be sorted
- * @size: size of the array
- * Return: empty
-*/
-
-void bitonic_sort(int *array, size_t size)
-{
-	if (!array || size <= 1)
-		return;
-	srt_bitnc(1, array, size, size);
+	insert_kind(deck);
+	insert_deck_val(deck);
 }
