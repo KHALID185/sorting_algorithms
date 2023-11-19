@@ -102,9 +102,10 @@ void insert_deck_val(deck_node_t **dk)
 	{
 		garage = i->next;
 		add = i->prev;
-		while (add != NULL &&
-				add->card->kind == i->card->kind &&
-				upload_val(add) > upload_val(i))
+		while (
+			add != NULL && add->card->kind == i->card->kind &&
+			upload_val(add) > upload_val(i)
+		)
 		{
 			add->next = i->next;
 			if (i->next != NULL)
@@ -131,6 +132,7 @@ void sort_deck(deck_node_t **deck)
 {
 	if (!deck || !(*deck) || (*deck)->next == NULL)
 		return;
+
 	insert_kind(deck);
 	insert_deck_val(deck);
 }
