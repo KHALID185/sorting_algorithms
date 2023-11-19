@@ -116,7 +116,7 @@ void insert_deck_val(deck_node_t **dk)
 			add->next = i->next;
 			if (i->next != NULL)
 				i->next->prev = add;
-			add->prev = add->prev;
+			i->prev = add->prev;
 			i->next = add;
 			if (add->prev != NULL)
 				add->prev->next = i;
