@@ -1,5 +1,11 @@
 #include "deck.h"
 
+int cmp_s(const char *str1, const char *str2);
+char upload_val(deck_node_t *el_crd);
+void insert_kind(deck_node_t **dk);
+void insert_deck_val(deck_node_t **dk);
+void sort_deck(deck_node_t **deck);
+
 /**
  * cmp_s - compare two strings
  * @str1: string 1
