@@ -1,61 +1,80 @@
 #include "sort.h"
 
-void ech_place(listint_t *index_new, listint_t *index_prev, listint_t **d_lst);
-
 /**
- * cocktail_sort_list - sort array of int using cocktail sort algorithm
- * @list: doubly linked list
+ * cmp_bitnc - comparaison bitonic function
+ * @srt_direction: sorted numbers direction
+ * @arr: the array
+ * @sz: the size of array
  * Return: empty
 */
 
-void cocktail_sort_list(listint_t **list)
+void cmp_bitnc(char srt_direction, int *arr, size_t sz)
 {
-	listint_t *srt_tail = *list, *el_f = NULL, *el_l = NULL;
+	size_t iter_1, iter;
+	int change_plc;
 
-	if (!list || !(*list) || (*list)->next == NULL)
-		return;
-	do {
-		while (srt_tail->next)
+	iter = sz / 2;
+	for (iter_1 = 0; iter_1 < iter; iter_1++)
+	{
+		if ((arr[iter_1] > arr[iter_1 + iter]) == srt_direction)
 		{
-			if (srt_tail->n > srt_tail->next->n)
-				ech_place(srt_tail->next, srt_tail, list);
-			else
-				srt_tail = srt_tail->next;
+			change_plc = arr[iter_1];
+			arr[iter_1] = arr[iter_1 + iter];
+			arr[iter_1 + iter] = change_plc;
 		}
-		el_l = srt_tail;
-		while (srt_tail->prev != el_f)
-		{
-			if (srt_tail->n < srt_tail->prev->n)
-				ech_place(srt_tail, srt_tail->prev, list);
-			else
-				srt_tail = srt_tail->prev;
-		}
-		el_f = srt_tail;
-	} while (el_f != el_l);
+	}
 }
 
 /**
- * * ech_place - echange value in the array
- * * @index_new: pointer in a new value of array
- * * @index_prev: pointer in the old value of array
- * * @d_lst: a doubly linked list
- * * Return: empty
- * */
+ * mrg_bitnc - merge using bitonic algorithm function
+ * @srt_direction: direction of the sorted numbers
+ * @arr: the array
+ * @sz: size of array
+ * Return: empty
+*/
 
-void ech_place(listint_t *index_new, listint_t *index_prev, listint_t **d_lst)
+void mrg_bitnc(char srt_direction, int *arr, size_t sz)
 {
-	listint_t *garage_1 = index_new->next;
-	listint_t *garage_2 = index_prev->prev;
+	if (sz <= 1)
+		return;
+	cmp_bitnc(srt_direction, arr, sz);
+	mrg_bitnc(srt_direction, arr, sz / 2);
+	mrg_bitnc(srt_direction, arr + (sz / 2), sz / 2);
+}
 
-	if (garage_1 != NULL)
-		garage_1->prev = index_prev;
-	if (garage_2 != NULL)
-		garage_2->next = index_new;
-	index_new->prev = garage_2;
-	index_prev->next = garage_1;
-	index_new->next = index_prev;
-	index_prev->prev = index_new;
-	if (*d_lst == index_prev)
-		*d_lst = index_new;
-	print_list(*d_lst);
+/**
+ * srt_bitnc - sort integers using bitonic algorithm
+ * @srt_direction: direction of array sorted
+ * @arr: the array
+ * @sz: size of array
+ * @sz_total: total size
+ * Return: empty
+*/
+
+void srt_bitnc(char srt_direction, int *arr, size_t sz, size_t sz_total)
+{
+	if (sz <= 1)
+		return;
+	printf("Merging [%lu/%lu] (%s):\n", sz, sz_total, (srt_direction == 1) ? "srt_direction" : "DOWN");
+	print_array(arr, sz);
+	srt_bitnc(1, arr, sz / 2, sz_total);
+	srt_bitnc(0, arr + (sz / 2), sz / 2, sz_total);
+	mrg_bitnc(srt_direction, arr, sz);
+	printf("Result [%lu/%lu] (%s):\n", sz, sz_total, (srt_direction == 1) ? "srt_direction" : "DOWN");
+	print_array(arr, sz);
+
+}
+
+/**
+ * bitonic_sort - sort array of int using bitonic algorithm
+ * @array: the array to be sorted
+ * @size: size of the array
+ * Return: empty
+*/
+
+void bitonic_sort(int *array, size_t size)
+{
+	if (!array || size <= 1)
+		return;
+	srt_bitnc(1, array, size, size);
 }

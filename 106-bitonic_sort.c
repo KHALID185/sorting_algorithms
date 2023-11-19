@@ -1,80 +1,77 @@
 #include "sort.h"
-
 /**
- * cmp_bitnc - comparaison bitonic function
- * @srt_direction: sorted numbers direction
- * @arr: the array
- * @sz: the size of array
- * Return: empty
-*/
-
-void cmp_bitnc(char srt_direction, int *arr, size_t sz)
+ * bitonic_compare - sort bitonic algorithm
+ * @up: direction of sorting
+ * @array: sub-array to sort
+ * @size: size of the sub-array
+ */
+void bitonic_compare(char up, int *array, size_t size)
 {
-	size_t iter_1, iter;
-	int change_plc;
+	size_t i, eva;
+	int swap;
 
-	iter = sz / 2;
-	for (iter_1 = 0; iter_1 < iter; iter_1++)
+	eva = size / 2;
+	for (i = 0; i < eva; i++)
 	{
-		if ((arr[iter_1] > arr[iter_1 + iter]) == srt_direction)
+		if ((array[i] > array[i + eva]) == up)
 		{
-			change_plc = arr[iter_1];
-			arr[iter_1] = arr[iter_1 + iter];
-			arr[iter_1 + iter] = change_plc;
+			swap = array[i];
+			array[i] = array[i + eva];
+			array[i + eva] = swap;
 		}
 	}
 }
 
 /**
- * mrg_bitnc - merge using bitonic algorithm function
- * @srt_direction: direction of the sorted numbers
- * @arr: the array
- * @sz: size of array
- * Return: empty
-*/
-
-void mrg_bitnc(char srt_direction, int *arr, size_t sz)
+ * bitonic_merge - recursion to mergess ub-arrays
+ * @up: direction of sorting
+ * @array: sub-array to sort
+ * @size: size of the sub-array
+ *
+ * Return: void
+ */
+void bitonic_merge(char up, int *array, size_t size)
 {
-	if (sz <= 1)
+	if (size < 2)
 		return;
-	cmp_bitnc(srt_direction, arr, sz);
-	mrg_bitnc(srt_direction, arr, sz / 2);
-	mrg_bitnc(srt_direction, arr + (sz / 2), sz / 2);
+	bitonic_compare(up, array, size);
+	bitonic_merge(up, array, size / 2);
+	bitonic_merge(up, array + (size / 2), size / 2);
 }
 
 /**
- * srt_bitnc - sort integers using bitonic algorithm
- * @srt_direction: direction of array sorted
- * @arr: the array
- * @sz: size of array
- * @sz_total: total size
- * Return: empty
-*/
-
-void srt_bitnc(char srt_direction, int *arr, size_t sz, size_t sz_total)
+ * bit_sort - recursive bitonic sort algorithm
+ * @up: direction of sorting
+ * @array: sub-array to sort
+ * @size: size of the sub-array
+ * @t: total size of the original array
+ *
+ * Return: void
+ */
+void bit_sort(char up, int *array, size_t size, size_t t)
 {
-	if (sz <= 1)
+	if (size < 2)
 		return;
-	printf("Merging [%lu/%lu] (%s):\n", sz, sz_total, (srt_direction == 1) ? "srt_direction" : "DOWN");
-	print_array(arr, sz);
-	srt_bitnc(1, arr, sz / 2, sz_total);
-	srt_bitnc(0, arr + (sz / 2), sz / 2, sz_total);
-	mrg_bitnc(srt_direction, arr, sz);
-	printf("Result [%lu/%lu] (%s):\n", sz, sz_total, (srt_direction == 1) ? "srt_direction" : "DOWN");
-	print_array(arr, sz);
+	printf("Merging [%lu/%lu] (%s):\n", size, t, (up == 1) ? "UP" : "DOWN");
+	print_array(array, size);
+	bit_sort(1, array, size / 2, t);
+	bit_sort(0, array + (size / 2), size / 2, t);
+	bitonic_merge(up, array, size);
+	printf("Result [%lu/%lu] (%s):\n", size, t, (up == 1) ? "UP" : "DOWN");
+	print_array(array, size);
 
 }
 
 /**
- * bitonic_sort - sort array of int using bitonic algorithm
- * @array: the array to be sorted
+ * bitonic_sort - sorts an array in ascending order
+ * @array: array to sort
  * @size: size of the array
- * Return: empty
+ *
+ * Return: void
 */
-
 void bitonic_sort(int *array, size_t size)
 {
-	if (!array || size <= 1)
+	if (array == NULL || size < 2)
 		return;
-	srt_bitnc(1, array, size, size);
+	bit_sort(1, array, size, size);
 }
