@@ -60,7 +60,7 @@ void srt_bitnc(char srt_d, int *arr, size_t sz, size_t sz_t)
 	srt_bitnc(1, arr, sz / 2, sz_t);
 	srt_bitnc(0, arr + (sz / 2), sz / 2, sz_t);
 	mrg_bitnc(srt_d, arr, sz);
-	printf("Result [%lu/%lu] (%s):\n", sz, sz_t, (srt_d == 1) ? "up" : "DOWN");
+	printf("Result [%lu/%lu] (%s):\n", sz, sz_t, (srt_d == 1) ? "UP" : "DOWN");
 	print_array(arr, sz);
 
 }
