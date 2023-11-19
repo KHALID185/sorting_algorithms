@@ -44,23 +44,23 @@ void mrg_bitnc(char srt_direction, int *arr, size_t sz)
 
 /**
  * srt_bitnc - sort integers using bitonic algorithm
- * @srt_direction: direction of array sorted
+ * @srt_d: direction of array sorted
  * @arr: the array
  * @sz: size of array
- * @sz_total: total size
+ * @sz_t: total size
  * Return: empty
 */
 
-void srt_bitnc(char srt_direction, int *arr, size_t sz, size_t sz_total)
+void srt_bitnc(char srt_d, int *arr, size_t sz, size_t sz_t)
 {
 	if (sz <= 1)
 		return;
-	printf("Merging [%lu/%lu] (%s):\n", sz, sz_total, (srt_direction == 1) ? "srt_direction" : "DOWN");
+	printf("Merging [%lu/%lu] (%s):\n", sz, sz_t, (srt_d == 1) ? "UP" : "DOWN");
 	print_array(arr, sz);
-	srt_bitnc(1, arr, sz / 2, sz_total);
-	srt_bitnc(0, arr + (sz / 2), sz / 2, sz_total);
-	mrg_bitnc(srt_direction, arr, sz);
-	printf("Result [%lu/%lu] (%s):\n", sz, sz_total, (srt_direction == 1) ? "srt_direction" : "DOWN");
+	srt_bitnc(1, arr, sz / 2, sz_t);
+	srt_bitnc(0, arr + (sz / 2), sz / 2, sz_t);
+	mrg_bitnc(srt_dn, arr, sz);
+	printf("Result [%lu/%lu] (%s):\n", sz, sz_t, (srt_d == 1) ? "up" : "DOWN");
 	print_array(arr, sz);
 
 }
