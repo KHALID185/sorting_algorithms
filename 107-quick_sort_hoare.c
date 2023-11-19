@@ -1,7 +1,7 @@
 #include "sort.h"
 
-void srt_hoare(int *array, ssize_t indx_min, ssize_t indx_max, size_t size);
-size_t hoare_partition(int *arr, ssize_t indx_min, ssize_t indx_max, size_t sz);
+void srt_hoare(int *arr, ssize_t indx_min, ssize_t indx_max, size_t sz);
+size_t hoare_partit(int *arr, ssize_t indx_min, ssize_t indx_max, size_t sz);
 
 /**
  * quick_sort_hoare - sorts an array of int with quick sort hoare algrthm
@@ -20,25 +20,25 @@ void quick_sort_hoare(int *array, size_t size)
  * @arr: the array
  * @indx_min: index minimum of the hoare_partition
  * @indx_max: index maximum of the hoare_partition
- * @size: the size of array
+ * @sz: the size of array
  * Return: empty
 */
 
-void srt_hoare(int *array, ssize_t indx_min, ssize_t indx_max, size_t size)
+void srt_hoare(int *arr, ssize_t indx_min, ssize_t indx_max, size_t sz)
 {
 	ssize_t pvt_arr;
 
 	if (indx_min < indx_max)
 	{
-		pvt_arr = hoare_partition(array, indx_min, indx_max, size);
-		srt_hoare(array, indx_min, pvt_arr, size);
-		srt_hoare(array, pvt_arr + 1, indx_max, size);
+		pvt_arr = hoare_partit(arr, indx_min, indx_max, sz);
+		srt_hoare(arr, indx_min, pvt_arr, sz);
+		srt_hoare(arr, pvt_arr + 1, indx_max, sz);
 
 	}
 }
 
 /**
- * hoare_partition - the Hoare partition scheme function
+ * hoare_partit - the Hoare partition scheme function
  * @arr: the array
  * @indx_min: index minimum
  * @indx_max: index maximum
@@ -46,7 +46,7 @@ void srt_hoare(int *array, ssize_t indx_min, ssize_t indx_max, size_t size)
  * Return: the size
 */
 
-size_t hoare_partition(int *arr, ssize_t indx_min, ssize_t indx_max, size_t sz)
+size_t hoare_partit(int *arr, ssize_t indx_min, ssize_t indx_max, size_t sz)
 {
 	int change_plc, pvt_arr;
 
